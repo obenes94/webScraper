@@ -1,0 +1,61 @@
+plugins {
+    id 'scala'
+    id 'application'
+}
+
+group 'com.webscraper'
+version '1.0.0'
+
+def scalaVersion = '2.11.12'
+def scalaBinaryVersion = '2.11'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+sourceSets.main.scala.srcDirs = ["src/main/scala"]
+sourceSets.main.java.srcDirs = []
+
+repositories {
+    maven {
+        url "https://artifactory.dbgcloud.io/artifactory/stx-app-maven-prod"
+    }
+    mavenCentral()
+}
+
+dependencies {
+    // Scala
+    implementation "org.scala-lang:scala-library:${scalaVersion}"
+    
+    // Selenium WebDriver (version 3.x for Java 8 compatibility)
+    implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+    
+    // WebDriver Manager (newer version for Chrome 143 support)
+    implementation 'io.github.bonigarcia:webdrivermanager:5.9.2'
+    
+    // Logging
+    implementation 'ch.qos.logback:logback-classic:1.2.11'
+    implementation "com.typesafe.scala-logging:scala-logging_${scalaBinaryVersion}:3.9.2"
+    implementation 'org.slf4j:slf4j-api:1.7.36'
+    
+    // Configuration
+    implementation 'com.typesafe:config:1.4.3'
+    
+    // JSON parsing
+    implementation "io.circe:circe-core_${scalaBinaryVersion}:0.8.0"
+    implementation "io.circe:circe-generic_${scalaBinaryVersion}:0.8.0"
+    implementation "io.circe:circe-parser_${scalaBinaryVersion}:0.8.0"
+    
+    // Testing
+    testImplementation "org.scalatest:scalatest_${scalaBinaryVersion}:3.0.8"
+    testImplementation 'junit:junit:4.13.2'
+}
+
+application {
+    mainClass = 'com.webscraper.Main'
+}
+
+
+wrapper {
+    gradleVersion = '7.4'
+    distributionType = Wrapper.DistributionType.BIN
+}
